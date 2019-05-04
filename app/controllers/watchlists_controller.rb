@@ -29,7 +29,7 @@ class WatchlistsController < ApplicationController
 
     respond_to do |format|
       if @watchlist.save
-        format.html { redirect_to watchlists_url, notice: 'Watchlist was successfully created.' }
+        format.html { redirect_to watchlists_url, notice: 'Item was successfully added.' }
         format.json { render :show, status: :created, location: @watchlist }
       else
         format.html { render :new }
@@ -43,7 +43,7 @@ class WatchlistsController < ApplicationController
   def update
     respond_to do |format|
       if @watchlist.update(watchlist_params)
-        format.html { redirect_to @watchlist, notice: 'Watchlist was successfully updated.' }
+        format.html { redirect_to @watchlist, notice: 'Item was successfully updated.' }
         format.json { render :show, status: :ok, location: @watchlist }
       else
         format.html { render :edit }
@@ -57,7 +57,7 @@ class WatchlistsController < ApplicationController
   def destroy
     @watchlist.destroy
     respond_to do |format|
-      format.html { redirect_to watchlists_url, notice: 'Watchlist was successfully destroyed.' }
+      format.html { redirect_to watchlists_url, notice: 'Item was successfully removed.' }
       format.json { head :no_content }
     end
   end
