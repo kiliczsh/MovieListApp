@@ -6,19 +6,16 @@
       <%= simple_form_for :watchlist, url: root_path, method: "GET", html: { class: 'form-inline' } do |f| %>
         <%= f.input :title, input_html: {value: ""} %>
 	      <%= f.input :year, :required => false, input_html: {value: ""} %>
-        <%= f.button  :submit , "Search", class: 'btn btn-primary', data: { disable_with: "Searching #{@title}..."  } %>
+        <%= f.button  :submit , "Search" %>
       <% end %>
 
 
-  <tbody>
-
     <% if @parsed_json["Response"] == "True" %>
-      
-      <tr>
-        <p>Title : <%= @parsed_json["Title"] %><br/> </p>
-        <p>Year : <%= @parsed_json["Year"]     %>    </p>
-        <p>Director : <%= @parsed_json["Director"] %></p>
-        <p>Genre : <%= @parsed_json["Genre"]    %>   </p>
+
+        <p> Title : <%= @parsed_json["Title"] %>        </p>
+        <p> Year : <%= @parsed_json["Year"]     %>      </p>
+        <p> Director : <%= @parsed_json["Director"] %>  </p>
+        <p> Genre : <%= @parsed_json["Genre"]    %>     </p>
 
         <% if @parsed_json["Ratings"].nil? |  @parsed_json["Ratings"] != []  %>
           <p>Rating : <%= @parsed_json["imdbRating"] %></p>
@@ -32,7 +29,7 @@
                 director: @parsed_json["Director"], genre: @parsed_json["Genre"], 
                 rating: @parsed_json["Ratings"].first["Value"] ) %>
         <% end %>
-      </tr>
+
       
       <% item = Watchlist.find_by(title: @parsed_json["Title"]) %>
       <% if item.nil? %>
@@ -43,7 +40,7 @@
     <% else %>
       <td> Use search! </td>
     <% end %>
-  </tbody>
+
 
 
 
