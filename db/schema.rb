@@ -10,6 +10,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 0) do
+ActiveRecord::Schema.define(version: 2019_05_04_074817) do
+
+  create_table "searches", force: :cascade do |t|
+    t.string "title"
+    t.string "year"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "watchlists", force: :cascade do |t|
+    t.string "title"
+    t.string "year"
+    t.string "director"
+    t.string "genre"
+    t.string "rating"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
 end

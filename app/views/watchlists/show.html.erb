@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @watchlist.title %>
+</p>
+
+<p>
+  <strong>Year:</strong>
+  <%= @watchlist.year %>
+</p>
+
+<p>
+  <strong>Director:</strong>
+  <%= @watchlist.director %>
+</p>
+
+<p>
+  <strong>Genre:</strong>
+  <%= @watchlist.genre %>
+</p>
+
+<p>
+  <strong>Rating:</strong>
+  <%= @watchlist.rating %>
+</p>
+
+<%= link_to 'Edit', edit_watchlist_path(@watchlist) %> |
+<%= link_to 'Back', watchlists_path %>
