@@ -4,6 +4,7 @@ class WatchlistsController < ApplicationController
   # GET /watchlists
   # GET /watchlists.json
   def index
+    console
     @watchlists = Watchlist.all
   end
 
@@ -28,7 +29,7 @@ class WatchlistsController < ApplicationController
 
     respond_to do |format|
       if @watchlist.save
-        format.html { redirect_to @watchlist, notice: 'Watchlist was successfully created.' }
+        format.html { redirect_to watchlists_url, notice: 'Watchlist was successfully created.' }
         format.json { render :show, status: :created, location: @watchlist }
       else
         format.html { render :new }

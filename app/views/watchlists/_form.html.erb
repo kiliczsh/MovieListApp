@@ -4,14 +4,15 @@
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
   <div class="form-inputs">
-    <%= f.input :title %>
-    <%= f.input :year %>
-    <%= f.input :director %>
-    <%= f.input :genre %>
-    <%= f.input :rating %>
+    <%= f.input :title    ,as: :hidden ,input_html: { value: f.object.title     || @watchlist.title     } %>
+    <%= f.input :year     ,as: :hidden ,input_html: { value: f.object.year      || @watchlist.year      } %>
+    <%= f.input :director ,as: :hidden ,input_html: { value: f.object.director  || @watchlist.director  } %>
+    <%= f.input :genre    ,as: :hidden ,input_html: { value: f.object.genre     || @watchlist.genre     } %>
+    <%= f.input :rating   ,as: :hidden ,input_html: { value: f.object.rating    || @watchlist.rating    } %>
   </div>
 
   <div class="form-actions">
-    <%= f.button :submit %>
+    <%= f.button :submit , "Add Item" , class: 'btn btn-primary' , data: { disable_with: "Adding #{@watchlist.title}..." } %>
   </div>
 <% end %>
+

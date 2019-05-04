@@ -1,6 +1,8 @@
 <p id="notice"><%= notice %></p>
 
 <h1>Watchlists</h1>
+<h1><a href="/searches">Searches</a></h1>
+
 
 <table>
   <thead>
@@ -22,14 +24,12 @@
         <td><%= watchlist.director %></td>
         <td><%= watchlist.genre %></td>
         <td><%= watchlist.rating %></td>
-        <td><%= link_to 'Show', watchlist %></td>
-        <td><%= link_to 'Edit', edit_watchlist_path(watchlist) %></td>
-        <td><%= link_to 'Destroy', watchlist, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><% link_to 'Show', watchlist %></td>
+        <td><% link_to 'Edit', edit_watchlist_path(watchlist) %></td>
+        <td><%= button_to 'Destroy', watchlist, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
 <br>
-
-<%= link_to 'New Watchlist', new_watchlist_path %>

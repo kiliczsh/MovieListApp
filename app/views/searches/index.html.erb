@@ -1,29 +1,52 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Searches</h1>
+<h1>Search</h1>
+<h1><a href="/watchlists">Watchlist</a></h1>
 
-<table>
-  <thead>
-    <tr>
-      <th>Title</th>
-      <th>Year</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+      <%= simple_form_for :watchlist, url: root_path, method: "GET", html: { class: 'form-inline' } do |f| %>
+        <%= f.input :title, input_html: {value: ""} %>
+	      <%= f.input :year, :required => false, input_html: {value: ""} %>
+        <%= f.button  :submit , "Search", class: 'btn btn-primary', data: { disable_with: "Searching #{@title}..."  } %>
+      <% end %>
+
 
   <tbody>
-    <% @searches.each do |search| %>
+
+    <% if @parsed_json["Response"] == "True" %>
+      
       <tr>
-        <td><%= search.title %></td>
-        <td><%= search.year %></td>
-        <td><%= link_to 'Show', search %></td>
-        <td><%= link_to 'Edit', edit_search_path(search) %></td>
-        <td><%= link_to 'Destroy', search, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <p>Title : <%= @parsed_json["Title"] %><br/> </p>
+        <p>Year : <%= @parsed_json["Year"]     %>    </p>
+        <p>Director : <%= @parsed_json["Director"] %></p>
+        <p>Genre : <%= @parsed_json["Genre"]    %>   </p>
+
+        <% if @parsed_json["Ratings"].nil? |  @parsed_json["Ratings"] != []  %>
+          <p>Rating : <%= @parsed_json["imdbRating"] %></p>
+          <% @watchlist = Watchlist.new(title: @parsed_json["Title"] ,year: @parsed_json["Year"],
+                director: @parsed_json["Director"], genre: @parsed_json["Genre"], 
+                rating: @parsed_json["imdbRating"] ) %>
+        <% else %>
+          <p>Source : <%= @parsed_json["Ratings"].first["Source"] %></p>
+          <p>Rating : <%= @parsed_json["Ratings"].first["Value"] %></p>
+          <% @watchlist = Watchlist.new(title: @parsed_json["Title"] ,year: @parsed_json["Year"],
+                director: @parsed_json["Director"], genre: @parsed_json["Genre"], 
+                rating: @parsed_json["Ratings"].first["Value"] ) %>
+        <% end %>
       </tr>
+      
+      <% item = Watchlist.find_by(title: @parsed_json["Title"]) %>
+      <% if item.nil? %>
+        <%= render :partial => 'watchlists/form' ,locals: { watchlist: item}  %>
+      <% else %>
+      <td><%= button_to 'Remove Item', item, method: :delete, data: { confirm: "Delete #{item["title"]}?" } %></td>
+      <% end %>
+    <% else %>
+      <td> Use search! </td>
     <% end %>
   </tbody>
-</table>
 
-<br>
 
-<%= link_to 'New Search', new_search_path %>
+
+
+
+

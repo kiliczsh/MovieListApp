@@ -4,7 +4,36 @@ class SearchesController < ApplicationController
   # GET /searches
   # GET /searches.json
   def index
+    console
+    @api_key = ENV['OMDB_API_KEY']
     @searches = Search.all
+
+    @title = ""
+    @year = ""
+    
+    @movie = params["watchlist"]
+    
+    if @movie.present?
+      @title = @movie["title"]
+      @year = @movie["year"]
+    end
+
+    if @year.nil?
+      @datas = HTTParty.get('http://www.omdbapi.com/?apikey='+@api_key+'&t='+@title)
+    elsif @title.nil?
+      @datas = HTTParty.get('http://www.omdbapi.com/?apikey='+@api_key+'&y='+@year)
+    elsif @title.nil? & @year.nil?
+      @title = "Avengers" # Sample Movie from DataBase
+      @year = "2012"      # Sample Movie from DataBase
+      @datas = HTTParty.get('http://www.omdbapi.com/?apikey='+@api_key+'&t='+@title+'&y='+@year)
+    else
+      @datas = HTTParty.get('http://www.omdbapi.com/?apikey='+@api_key+'&t='+@title+'&y='+@year)
+    end
+    
+    #resp.body # => displays body of the response
+    
+    @parsed_json = JSON.parse(@datas.body) # => parses JSON if you need to parse it
+
   end
 
   # GET /searches/1
@@ -69,6 +98,6 @@ class SearchesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def search_params
-      params.require(:search).permit(:title, :year)
+      params.require(:watchlist).permit(:title, :year)
     end
 end
