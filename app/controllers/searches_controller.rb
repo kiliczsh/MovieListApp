@@ -18,6 +18,13 @@ class SearchesController < ApplicationController
       @year = @movie["year"]
     end
 
+    unless @title.ascii_only? then
+      @title = @title.delete!("^\u{0000}-\u{007F}")
+    end
+    unless @year.ascii_only? then
+      @year = @year.delete!("^\u{0000}-\u{007F}")
+    end
+    
     if @year.nil?
       @datas = HTTParty.get('http://www.omdbapi.com/?apikey='+@api_key+'&t='+@title)
     elsif @title.nil?

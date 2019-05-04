@@ -37,8 +37,12 @@
       <% else %>
       <td><%= button_to 'Remove Item', item, method: :delete, data: { confirm: "Delete #{item["title"]}?" } %></td>
       <% end %>
+    <% elsif @parsed_json["Response"] == "False" %>
+
+        </br></br></br>
+        <%= @parsed_json["Error"] %>
     <% else %>
-      <td> Use search! </td>
+      <p> Use search! </p>
     <% end %>
 
 
